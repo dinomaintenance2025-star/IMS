@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>IMS — Inventory Management</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="container">
+        <h1>IMS</h1>
+        <p class="tagline">Simple inventory & account demo — quick register and login flows.</p>
+        <p class="cta">
+          <a class="btn" href="/register.php">Open Register</a>
+          <a class="btn secondary" href="https://github.com/dinomaintenance2025-star/IMS">View on GitHub</a>
+        </p>
+        <p class="note">Note: the app backend uses PHP/MySQL (`db.php`). Netlify serves the static landing page only — PHP must be hosted elsewhere.</p>
+      </div>
+    </header>
+
+    <main class="container">
+      <section>
+        <h2>Quick start</h2>
+        <ul>
+          <li>To run locally: `php -S localhost:8000` from project root.</li>
+          <li>Ensure `db.php` points to a reachable MySQL instance.</li>
+          <li>Netlify will serve this static landing page; PHP will not execute on Netlify.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="container">© IMS</footer>
+  </body>
+</html>
