@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ims-app:dev
+    ports:
+      - "8080:80"
+    environment:
+      DB_HOST: db
+      DB_USER: ims_user
+      DB_PASS: ims_pass
+      DB_NAME: ims_db
+    depends_on:
+      - db
+    volumes:
+      - ./:/var/www/html:cached
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: ims_db
+      MYSQL_USER: ims_user
+      MYSQL_PASSWORD: ims_pass
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
