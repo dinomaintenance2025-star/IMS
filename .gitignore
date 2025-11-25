@@ -1,0 +1,11 @@
+# Ignore local DB credentials and environment files
+db.php
+.env
+
+# Node / build artifacts (if any)
+node_modules/
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db
