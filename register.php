@@ -15,14 +15,30 @@
 
   <?php
   if (isset($_POST['register'])) {
-      $username = $_POST['username'];
-      $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+      // Basic input trimming
+      $username = trim($_POST['username']);
+      $password_raw = $_POST['password'];
 
-      $sql = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
-      if ($conn->query($sql)) {
-          echo "✅ Account created! <a href='login.php'>Login</a>";
+      // Server-side validation (minimal)
+      if (strlen($username) < 3 || strlen($password_raw) < 6) {
+        echo "❌ Error: username must be >=3 chars and password >=6 chars.";
       } else {
-          echo "❌ Error: " . $conn->error;
+        $password_hashed = password_hash($password_raw, PASSWORD_DEFAULT);
+
+        // Use prepared statements to avoid SQL injection
+        $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+        if ($stmt) {
+          $stmt->bind_param('ss', $username, $password_hashed);
+          if ($stmt->execute()) {
+            echo "✅ Account created! <a href='login.php'>Login</a>";
+          } else {
+            // Duplicate username or other DB error
+            echo "❌ Error: " . htmlspecialchars($stmt->error);
+          }
+          $stmt->close();
+        } else {
+          echo "❌ Error preparing statement: " . htmlspecialchars($conn->error);
+        }
       }
   }
   ?>
