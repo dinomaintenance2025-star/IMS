@@ -1,0 +1,11 @@
+.git
+.github
+.gitignore
+db.php
+node_modules
+vendor
+*.log
+*.env
+/.idea
+/.vscode
+dist
